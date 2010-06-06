@@ -107,6 +107,11 @@ class TaskHandler(webapp.RequestHandler):
             for skill in self.request.get('skills').split(','):
                 requestList.append(Task.gql("WHERE skills_needed = :1", skill))
             results = set(resultList)
+        elif self.request.get('skills_strict'):
+            resultList = Task.all()
+            for skill in self.request.get('skills').split(','):
+                requestList = requestList.filter("skills_needed=", skill))
+            results = set(resultList)
         else:
             results = Task.all()
         if results.get() ==None : self.response.out.write("")
