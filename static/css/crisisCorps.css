@@ -1,0 +1,55 @@
+.task {
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-top-style: solid;
+	border-top-color: #FF0000;
+	border-bottom-color: #FF0000;
+	border-top-width: thin;
+	background-color : #FFAAAA;
+	margin:10px;
+	padding : 3px 10px 3px 10px;
+}
+
+.taskLinks {
+	float : right;
+	font-size : 10px;
+	font-weight : normal;
+}
+
+.taskLink {
+	text-decoration:underline;
+	cursor : pointer;
+	color : blue;
+}
+
+.taskHeader {
+	width : 100%;
+	float : left;
+	font-size : 12px;
+	font-weight : bold;
+	padding: 0px 10px 0px 10px;
+}
+
+.taskTitle {
+	font-weight : bold;
+	float : left;
+	
+}
+
+.taskOrg {
+	text-decoration : italics;
+	font-weight : normal;
+	float : right;
+	padding : 0px 10px 0px 10px;
+}
+
+.taskLocationSkills {
+	padding: 0px 10px 0px 10px;
+	font-size : 10px;
+}
+
+.taskDescription {
+	clear : both;
+	border : 1px thin;
+	font-size : 12px;
+}

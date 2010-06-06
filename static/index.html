@@ -1,0 +1,55 @@
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+    <title>Crisis Corps | Facebook</title>
+    <style>
+      body {
+        font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
+      }
+      h1 a {
+        text-decoration: none;
+        color: #3b5998;
+      }
+      h1 a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./css/crisisCorps.css" />
+    <!-- ExtJS library: base/adapter -->
+    <script type="text/javascript" src="./extjs/adapter/ext/ext-base.js"></script>
+
+    <!-- ExtJS library: all widgets -->
+    <script type="text/javascript" src="./extjs/ext-all-debug.js"></script>
+    <script type="text/javascript" src="./js/extux/SuperBoxSelect.js"></script>
+    
+    
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script> -->
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+  </head>
+  <body>
+    <!--
+      We use the JS SDK to provide a richer user experience. For more info,
+      look here: http://github.com/facebook/connect-js
+    -->
+    <div id="user-info" style="display: none;"></div>
+    <div>
+      <button id="login">Login</button>
+      <button id="logout">Logout</button>
+      <button id="disconnect">Disconnect</button>
+    </div>
+    
+
+    <div id="fb-root"></div>
+    
+	<script type="text/javascript" src="./js/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="./js/Task.js"></script>
+    <script type="text/javascript" src="./js/fb/FacebookInteraction.js"></script>
+    <script type="text/javascript" src="./crisisCorps.js"></script>
+    
+    <div id="extmain"></div>
+    
+<!--    <div id="fb-root"></div>-->
+<!--	 <script type="text/javascript" src="./crisisCorps.js"></script>-->
+  </body>
+</html>
