@@ -35,7 +35,7 @@ class Task(db.Model):
 class User_Task(db.Model):
     fb_id = db.IntegerProperty()
     fbUser = db.ReferenceProperty(fbUser)
-    task_id = IntegerProperty()
+    task_id = db.IntegerProperty()
     Task = db.ReferenceProperty(Task)
     Score = db.IntegerProperty()
     Status = db.IntegerProperty()
