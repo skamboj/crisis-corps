@@ -14,7 +14,7 @@ class fbUser(db.Model):
 class Organization(db.Model):
     org_name = db.StringProperty()
     org_id = db.IntegerProperty()
-    url = db.LinkProperty()
+    url = db.StringProperty()
     application_url = db.LinkProperty()
     api_key = db.StringProperty()
     rank = db.IntegerProperty()
@@ -34,6 +34,7 @@ class Task(db.Model):
     skills_needed = db.StringListProperty()
     url = db.LinkProperty()
     status = db.IntegerProperty()
+    callback = db.StringProperty()
     
 class User_Task(db.Model):
     fb_id = db.IntegerProperty()

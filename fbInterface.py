@@ -66,8 +66,8 @@ class OrgHandler(webapp.RequestHandler):
             org = Organization()
             org.org_id = Organization.all().count() + 1
             api_key = org.put()
-            org.api_key = api_key
-            self.response.out.write(api_key)
+            org.api_key = str(api_key)
+            self.response.out.write(str(api_key))
         else:
             org = results.get()
         org.org_name = cgi.escape(self.request.get('org_name'))
@@ -75,8 +75,11 @@ class OrgHandler(webapp.RequestHandler):
             org.url = cgi.escape(self.request.get('url'))
         if self.request.get('rank'):
             org.rank = int(cgi.escape(self.request.get('rank')))
-        if self.request.get('active'):            
-            org.active = cgi.escape(self.request.get('active'))
+        if self.request.get('active'):
+            if int(self.request.get('active')) == 1:            
+                org.active = True
+            else:
+                org.active = False
         if self.request.get('fbaccount'):
             org.fbaccount = cgi.escape(self.request.get('fbaccount'))
         if self.request.get('badge_image_url'):            
@@ -99,6 +102,16 @@ class TaskHandler(webapp.RequestHandler):
         elif self.request.get('org_id'):
             org_id = int(cgi.escape(self.request.get('org_id')))
             results = Task.gql("WHERE org_id = :1", org_id)
+        elif self.request.get('skills'):
+            resultList = []
+            for skill in self.request.get('skills').split(','):
+                requestList.append(Task.gql("WHERE skills_needed = :1", skill))
+            results = set(resultList)
+        elif self.request.get('skills_strict'):
+            resultList = Task.all()
+            for skill in self.request.get('skills').split(','):
+                requestList = requestList.filter("skills_needed=", skill))
+            results = set(resultList)
         else:
             results = Task.all()
         if results.get() ==None : self.response.out.write("")
@@ -117,6 +130,8 @@ class TaskHandler(webapp.RequestHandler):
             task.name = task_name
             task.task_id = Task.all().count()
             task.owning_org = Organization.all().filter('org_id=',org_id).get()
+            task.callback = "http://crisiscorpsapp.appspot.com/api/" + (task.owning_org.Key()) + "/" + task.task_id
+            self.response.out.write("<callback=\"" + task.callback +"\" />")
         else:
             task = results.get()
         if self.request.get('desc'):
