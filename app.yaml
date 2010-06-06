@@ -1,0 +1,14 @@
+application: crisiscorpsapp
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /fb/
+  script: fbInterface.py
+
+- url: /
+  script: index.py
