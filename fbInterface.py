@@ -121,7 +121,7 @@ class TaskHandler(webapp.RequestHandler):
                 self.response.out.write(to_dict(result))
 
     def post(self):
-        org_id = int(cgi.escape(self.request.get('org_id')))
+        org_id = cgi.escape(self.request.get('org_id'))
         task_name = cgi.escape(self.request.get('task_name'))
         results = Task.gql("WHERE org_id = :1 AND name = :2", org_id, task_name)
         if results.get() == None:
