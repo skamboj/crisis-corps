@@ -1,0 +1,27 @@
+body {
+    font-family:"Georgia", serif
+}
+
+#body-wrapper {
+	width:970px;
+	margin:0 auto;
+}
+
+.clear {
+	clear:both;
+}
+
+.two-col {
+	width:49.98%;
+	float:left;
+}
+
+.center-align {
+	text-align:center;
+}
+.left-align {
+	text-align:left;
+}
+.right-align {
+	text-align:right;
+}
