@@ -13,6 +13,7 @@ class fbUser(db.Model):
 
 class Organization(db.Model):
     org_name = db.StringProperty()
+    org_id = db.IntegerProperty()
     url = db.LinkProperty()
     api_key = db.StringProperty()
     rank = db.IntegerProperty()
@@ -22,7 +23,9 @@ class Organization(db.Model):
     admins = db.ListProperty(db.Email)
 
 class Task(db.Model):
-    org_id = db.ReferenceProperty(Organization)
+    task_id = db.IntegerProperty()
+    org_id = db.IntegerProperty()
+    owning_org = db.ReferenceProperty(Organization)
     name = db.StringProperty()
     desc = db.TextProperty()
     skills_needed = db.StringListProperty()
@@ -30,8 +33,10 @@ class Task(db.Model):
     status = db.IntegerProperty()
     
 class User_Task(db.Model):
-    fb_id = db.ReferenceProperty(fbUser)
-    Task_id = db.ReferenceProperty(Task)
+    fb_id = db.IntegerProperty()
+    fbUser = db.ReferenceProperty(fbUser)
+    task_id = IntegerProperty()
+    Task = db.ReferenceProperty(Task)
     Score = db.IntegerProperty()
     Status = db.IntegerProperty()
-    org_id = db.ReferenceProperty(Organization)
+    org_id = db.IntegerProperty()
