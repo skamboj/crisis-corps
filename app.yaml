@@ -16,5 +16,10 @@ handlers:
 - url: /fb/.*
   script: fbInterface.py
 
+- url: /organizations
+  script: index.py
+  secure: always
+
 - url: /.*
   script: index.py
+
