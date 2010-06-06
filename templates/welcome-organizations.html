@@ -6,11 +6,22 @@
 
 <p>Organizations interested in getting access to the CrisisCorps API will need to fill
 	out the following form. We'll review your application and reply with information
-	about accessing our services.</p>
+	about accessing our services and help you get started.</p>
 
-<form>
+<form action="/organizations" method="post">
+  <fieldset>
+	  <label for="organization[org_name]">Name</label>
+	  <input name="organization[org_name]" type="text"/><br/>
+	  <label for="organization[url]">Website</label>
+	  <input name="organization[url]" type="text"/><br/>
+	  <label for="organization[fbaccount]">Facebook Page</label>
+	  <input name="organization[fbaccount]" type="text"/><br/>
+	  <label for="organization[admins]">Administrator Emails</label>
+	  <p class="instructions">Please separate using semi-colons ";"</p>
+	  <input name="organization[admins]" type="text"/><br/>
 
+	  <input type="submit" name="submit"/>
+  </fieldset>
 </form>
-
 {% endblock %}
 

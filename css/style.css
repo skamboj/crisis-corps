@@ -25,3 +25,12 @@ body {
 .right-align {
 	text-align:right;
 }
+
+.collapsed {
+	height:0;
+	overflow: hidden;
+}
+
+form .instructions {
+	font-size:85%
+}
