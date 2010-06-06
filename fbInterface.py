@@ -144,7 +144,7 @@ class TaskHandler(webapp.RequestHandler):
         if self.request.get('url'):            
             task.url = cgi.escape(self.request.get('url'))
         if self.request.get('status'):
-            task.status = cgi.escape(self.request.get('status'))
+            task.status = int(cgi.escape(self.request.get('status')))
         db.put(org)            
 
 class User_TaskHandler(webapp.RequestHandler):

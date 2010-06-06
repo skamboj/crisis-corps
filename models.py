@@ -29,7 +29,7 @@ class Task(db.Model):
     name = db.StringProperty()
     desc = db.TextProperty()
     skills_needed = db.StringListProperty()
-    url = db.LinkProperty()
+    url = db.StringProperty()
     status = db.IntegerProperty()
     callback = db.StringProperty()
     
