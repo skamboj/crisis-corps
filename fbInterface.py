@@ -75,8 +75,11 @@ class OrgHandler(webapp.RequestHandler):
             org.url = cgi.escape(self.request.get('url'))
         if self.request.get('rank'):
             org.rank = int(cgi.escape(self.request.get('rank')))
-        if self.request.get('active'):            
-            org.active = cgi.escape(self.request.get('active'))
+        if self.request.get('active'):
+            if int(self.request.get('active')) == 1:            
+                org.active = True
+            else:
+                org.active = False
         if self.request.get('fbaccount'):
             org.fbaccount = cgi.escape(self.request.get('fbaccount'))
         if self.request.get('badge_image_url'):            
@@ -99,6 +102,11 @@ class TaskHandler(webapp.RequestHandler):
         elif self.request.get('org_id'):
             org_id = int(cgi.escape(self.request.get('org_id')))
             results = Task.gql("WHERE org_id = :1", org_id)
+        elif self.request.get('skills'):
+            resultList = []
+            for skill in self.request.get('skills').split(','):
+                requestList.append(Task.gql("WHERE skills_needed = :1", skill))
+            results = set(resultList)
         else:
             results = Task.all()
         if results.get() ==None : self.response.out.write("")
