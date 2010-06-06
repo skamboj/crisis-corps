@@ -181,7 +181,9 @@ class User_TaskHandler(webapp.RequestHandler):
             user.score = int(cgi.escape(self.request.get('score')))
         if self.request.get('status'):
             user.status = int(cgi.escape(self.request.get('status')))
-        db.put(org)            
+        if self.resouce.get('desc'):
+            user.desc = cgi.escape(self.request.get('desc'))
+        db.put(user_task)            
 
 
 app = webapp.WSGIApplication([
