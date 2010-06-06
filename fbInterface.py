@@ -2,6 +2,7 @@ import cgi
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from models import *
+from ccUtils import *
 
 class testRoot(webapp.RequestHandler):
     def get(self):
@@ -17,7 +18,7 @@ class fbUserHandler(webapp.RequestHandler):
         if results.get() ==None : self.response.out.write("")
         else:
             for result in results:
-                self.response.out.write(result.to_xml())
+                self.response.out.write(to_dict(result))
 
     def post(self):
         fb_id = cgi.escape(self.request.get('fb_id'))
@@ -56,7 +57,7 @@ class OrgHandler(webapp.RequestHandler):
         if results.get() ==None : self.response.out.write("")
         else:
             for result in results:
-                self.response.out.write(result.to_xml())
+                self.response.out.write(to_dict(result))
 
     def post(self):
         org_name = cgi.escape(self.request.get('org_name'))
@@ -110,14 +111,14 @@ class TaskHandler(webapp.RequestHandler):
         elif self.request.get('skills_strict'):
             resultList = Task.all()
             for skill in self.request.get('skills').split(','):
-                requestList = requestList.filter("skills_needed=", skill))
+                requestList = requestList.filter("skills_needed=", skill)
             results = set(resultList)
         else:
             results = Task.all()
         if results.get() ==None : self.response.out.write("")
         else:
             for result in results:
-                self.response.out.write(result.to_xml())
+                self.response.out.write(to_dict(result))
 
     def post(self):
         org_id = int(cgi.escape(self.request.get('org_id')))
@@ -158,7 +159,7 @@ class User_TaskHandler(webapp.RequestHandler):
         if results.get() ==None : self.response.out.write("")
         else:
             for result in results:
-                self.response.out.write(result.to_xml())
+                self.response.out.write(to_dict(result))
 
     def post(self):
         fb_id = int(cgi.escape(self.request.get('fb_id')))
