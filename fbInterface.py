@@ -131,8 +131,10 @@ class TaskHandler(webapp.RequestHandler):
             task.name = task_name
             task.task_id = Task.all().count() + 1
             task.owning_org = Organization.all().filter('org_id=',org_id).get()
-            task.callback = "http://crisiscorpsapp.appspot.com/api/" + (task.owning_org.Key()) + "/" + task.task_id
-            self.response.out.write("{callback:\"" + task.callback +"\" /}")
+            if task.owning_org:
+                task.callback = "http://crisiscorpsapp.appspot.com/api/" + (task.owning_org.Key()) + "/" + task.task_id
+                self.response.out.write("{callback:\"" + task.callback +"\" /}")
+            else: self.response.out.write("{callback: }")
         else:
             task = results.get()
         if self.request.get('desc'):
