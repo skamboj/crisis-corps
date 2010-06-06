@@ -66,8 +66,8 @@ class OrgHandler(webapp.RequestHandler):
             org = Organization()
             org.org_id = Organization.all().count() + 1
             api_key = org.put()
-            org.api_key = api_key
-            self.response.out.write(api_key)
+            org.api_key = str(api_key)
+            self.response.out.write(str(api_key))
         else:
             org = results.get()
         org.org_name = cgi.escape(self.request.get('org_name'))
