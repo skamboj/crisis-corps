@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Crisis Corps: Add Organization</title>
+	<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body>
+	<form name="addOrganization" action="http://crisiscorpsapp.appspot.com/fb/Organization" method="post" >
+		Organization Name: <input type="text" name="org_name" id="org_name" />
+		<br/>
+		URL: <input type="text" name="url" id="url" />
+		<br/>
+		Rank: <input type="text" name="rank" id="rank" />
+		<br/>
+		FB_Account:  <input type="text" name="fb_account" id="fb_account" />
+		<br/>
+		Active:  <input type="checkbox" name="activeChk" id="activeChk" checked="checked" disabled />
+		<input type="hidden" name="active" value="1">
+		<br/>
+	
+		<input type="submit" title="submit" value="Add Organization" />
+	</form>
+</body>
+</html>
+
+<?php 
+} 
+?>

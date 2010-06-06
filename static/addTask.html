@@ -1,0 +1,61 @@
+<html>
+<head>
+	<title>Crisis Corps: Add Task</title>
+	<link rel="shortcut icon" href="favicon.ico" />
+	<script>
+		function prepSkillsAndSubmit() {
+                    var skillsSel = document.getElementById('skillsSel');
+                    var skills = document.getElementById('skills');
+                    skills.value = "";
+                    
+                    for(var i = 0; i < skillsSel.length; i++) {
+                        if(skillsSel.options[i].selected) {
+                            skills.value += skillsSel.options[i].value + ',';
+                        }
+                    }
+                    skills.value = skills.value.substring(0,skills.value.length - 1);
+
+                    document.forms.addTask.submit();
+                }
+
+                function getQueryVariable(variable) {
+                  var query = window.location.search.substring(1);
+                  var vars = query.split("&");
+                  for (var i=0;i<vars.length;i++) {
+                    var pair = vars[i].split("=");
+                    if (pair[0] == variable) {
+                      return pair[1];
+                    }
+                  }
+                  alert('Query Variable ' + variable + ' not found');
+                }
+
+                function loadOrgId() {
+                    document.getElementById('org_id').value = getQueryVariable('org_id');
+                }
+        </script>
+</head>
+<body onLoad="loadOrgId();">
+	<form name="addTask" action="http://crisiscorpsapp.appspot.com/fb/Task" method="post" >
+		Task Name: <input type="text" name="task_name" id="task_name" />
+		<br/>
+		URL: <input type="text" name="url" id="url" />
+		<br/>
+		Description: <textarea name="description" id="description" cols="20" rows="10"></textarea>
+		<br/>
+		Skills Needed:
+                    <select multiple name="skillsSel" id="skillsSel">
+                        <option value="Java">Java</option>
+                        <option value="English">English</option>
+                        <option value="French">French</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Klingon">Klingon</option>
+                    </select>
+                <input type="hidden" name="skills" id="skills" value="">
+                <input type="hidden" name="org_id" id="org_id" value="">
+		<input type="hidden" name="status" value="0"/>
+	
+		<input type="button" title="Submit" value="Add Task" onClick="prepSkillsAndSubmit();"/>
+	</form>
+</body>
+</html>
