@@ -1,9 +1,10 @@
 import os, cgi
+import sys
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from models import *
+from common.scripts.models import *
 
 
 class MainPage(webapp.RequestHandler):
@@ -22,21 +23,21 @@ class MainPage(webapp.RequestHandler):
             'organizations_url': self.request.uri+'/organizations'
             }
 
-        path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+        path = os.path.join(os.path.dirname(__file__), '../templates/index.html')
         self.response.out.write(template.render(path, template_values))
 
 class Individuals(webapp.RequestHandler):
     def get(self):
         template_values = {} 
 
-        path = os.path.join(os.path.dirname(__file__), 'templates/welcome-individuals.html')
+        path = os.path.join(os.path.dirname(__file__), '../templates/welcome-individuals.html')
         self.response.out.write(template.render(path, template_values))
 
 class Organizations(webapp.RequestHandler):
     def get(self):
         template_values = {} 
 
-        path = os.path.join(os.path.dirname(__file__), 'templates/welcome-organizations.html')
+        path = os.path.join(os.path.dirname(__file__), '../templates/welcome-organizations.html')
         self.response.out.write(template.render(path, template_values))
 
     def post(self):
@@ -50,16 +51,16 @@ class Organizations(webapp.RequestHandler):
         template_values = {}
 
         if db.put(org):
-            path = os.path.join(os.path.dirname(__file__), 'templates/organizations-create.html')
+            path = os.path.join(os.path.dirname(__file__), '../templates/organizations-create.html')
             self.response.out.write(template.render(path, template_values))
 	else:
-            path = os.path.join(os.path.dirname(__file__), 'templates/welcome-organizations.html')
+            path = os.path.join(os.path.dirname(__file__), '../templates/welcome-organizations.html')
             self.response.out.write(template.render(path, template_values))
 
 application = webapp.WSGIApplication(
     [('/', MainPage),
-    ('/individuals', Individuals),
-    ('/organizations', Organizations)],
+     ('/individuals', Individuals),
+     ('/organizations', Organizations)],
     debug=True)
 
 def main():

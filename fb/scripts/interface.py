@@ -1,8 +1,8 @@
 import cgi
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from models import *
-from ccUtils import *
+from common.scripts.models import *
+from common.scripts.ccUtils import *
 
 class testRoot(webapp.RequestHandler):
     def get(self):

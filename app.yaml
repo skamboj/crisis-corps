@@ -4,22 +4,37 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /static
-  static_dir: static
+- url: /libs
+  static_dir: libs
 
 - url: /css
   static_dir: css
 
-- url: /js
-  static_dir: js
+- url: /images
+  static_dir: images
+
+# --------------------
+# Common functionality
+# --------------------
+- url: /common/static
+  static_dir: common/static
+
+# ----------------------
+# Facebook specific code
+# ----------------------
+- url: /fb/static
+  static_dir: fb/static
 
 - url: /fb/.*
-  script: fbInterface.py
+  script: fb/scripts/interface.py
 
+# -------------------------------
+# Main/non Facebook functionality
+# -------------------------------
 - url: /organizations
-  script: index.py
+  script: main/scripts/index.py
   secure: always
 
 - url: /.*
-  script: index.py
+  script: main/scripts/index.py
 
