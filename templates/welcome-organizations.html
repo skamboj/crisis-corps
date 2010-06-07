@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>About</h2>
+  <p>The Crisis Corp Facebook Application was created out of the
+	  need to aggregate crowdsourcing resources for disaster relief
+	  tasks, such as translation of SMS messages and digital map
+	  enhancement. It is crucial to have a crowdsourcing network in
+	  place prior to a disaster so that accomplishing Mechanical
+	  Turk-like tasks requires only activation of the network, not
+	  creation of it. </p>
+  <p>The app is designed to take advantage of the
+	  social aspects of Facebook in order to create a crowdsourcing
+	  network of individuals, gathering and recording their skillset
+	  and interest data to help qualify them as candidates for
+	  working on whatever tasks and needs may arise. Crisis Corp is
+	  not a Mechanical Turk application; we create the network of
+	  people that are standing by for you to call into service with
+	  your evaluation system. Organizations coordinating their
+	  crowdsourcing efforts through Crisis Corp enhances the
+	  credibility of the tool, and helps grow the social network of
+	  users through merit based incentives setup by Crisis Corp and
+	  granted by the organization.</p>
+
+  <h2>Signup Process</h2>
+  <p>Organizations wishing to apply for a Crisis Corp membership can apply 
+	  online <a href="#signup-form">below</a>. We will ask for detailed
+	  information on your organization and the type of projects you will
+	  be asking us to source to the network. Please be as specific and
+	  detailed as possible to expedite the process and ensure your
+	  membership approval. When you're approved as a member, you will
+	  receive an API key which will allow you to integrate our services
+	  into your Tasks.</p>
+
+
+  <h2>Membership</h2>
+  <p>Once you're a member, a host of functions become available for you:</p>
+  <ul>
+	  <li>You can edit your account online: change your password and API key</li>
+	  <li>You can view a basic report of the tasks you have entered into the Crisis Corps system</li>
+	  <li>You can call the API to create, modify, and report on tasks using the functions detailed in the next section</li>
+  </ul>
+
+  <h2>Sign Up</h2>
+  <form id="signup-form" action="/organizations" method="post">
+    <fieldset>
+	    <label for="organization[org_name]">Name</label>
+	    <input name="organization[org_name]" type="text"/><br/>
+	    <label for="organization[url]">Website</label>
+	    <input name="organization[url]" type="text"/><br/>
+	    <label for="organization[fbaccount]">Facebook Page</label>
+	    <input name="organization[fbaccount]" type="text"/><br/>
+	    <label for="organization[admins]">Administrator Emails</label>
+	    <p class="instructions">Please separate using semi-colons ";"</p>
+	    <input name="organization[admins]" type="text"/><br/>
+
+	    <input type="submit" name="submit"/>
+    </fieldset>
+  </form>
+{% endblock %}

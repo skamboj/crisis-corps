@@ -7,8 +7,19 @@ handlers:
 - url: /static
   static_dir: static
 
+- url: /css
+  static_dir: css
+
+- url: /js
+  static_dir: js
+
 - url: /fb/.*
   script: fbInterface.py
 
-- url: /
+- url: /organizations
   script: index.py
+  secure: always
+
+- url: /.*
+  script: index.py
+

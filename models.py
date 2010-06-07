@@ -15,10 +15,13 @@ class Organization(db.Model):
     org_name = db.StringProperty()
     org_id = db.IntegerProperty()
     url = db.StringProperty()
+    application_url = db.LinkProperty()
     api_key = db.StringProperty()
     rank = db.IntegerProperty()
     active = db.BooleanProperty()
-    fbaccount = db.StringProperty()
+    #now pointing to facebook page as they might not know their account
+    #fbaccount = db.StringProperty()
+    fbaccount = db.LinkProperty()
     badge_image_url = db.StringProperty()
     admins = db.ListProperty(db.Email)
 
