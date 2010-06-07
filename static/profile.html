@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--
+vim:ts=2:sw=2:expandtab:
+-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Crisis Corps - Profile</title>
+<!-- 
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/xtheme-gray.css" />
+
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try{var pageTracker = _gat._getTracker("UA-1396058-1");pageTracker._initData();pageTracker._trackPageview();} catch(err) {}</script>
+-->
+<!-- LIBS -->
+<script type="text/javascript" src="ext-base.js"></script>
+<!-- ENDLIBS -->
+
+<script type="text/javascript" src="ext-all-debug.js"></script>
+
+<script type="text/javascript" src="languages.js"></script>
+<script type="text/javascript">
+
+/*jslint browser: true, devel: true, on: true, maxerr: 300, forin: true */
+/*global document, isNAN */
+var g_user_skills = [];
+var g_user_interests = [];
+
+function $(id) {
+  return document.getElementById(id);
+}
+function getSpecificURLParameter (theArgName) {
+	/* Thanks to  Eric Scheid ("ironclad") for this snippet, which was downloaded from ...
+	 * http://www.evolt.org/article/Javascript_to_Parse_URLs_in_the_Browser/17/14435/?format=print
+	 * ... on 4-27-2010
+	 */
+
+	var sArgs = location.search.slice(1).split('&');
+    var r = '';
+    for (var i = 0; i < sArgs.length; i++) {
+        if (sArgs[i].slice(0,sArgs[i].indexOf('=')) == theArgName) {
+            r = sArgs[i].slice(sArgs[i].indexOf('=')+1);
+            break;
+        }
+    }
+    r = (r.length > 0 ? unescape(r).split(',') : '');
+	if(r.length==1) {
+		r = r[0];
+	}
+	else if(r.length==0) {
+		r = '';
+	}
+	else {
+		alert("ERROR 5610");
+		r = "";
+	}
+	return r;
+}
+
+//--------------------------------------------------------------------
+
+
+function add_skill(skill) {
+  var i;
+  var already_has_skill = false;
+  for( i=0; i<g_user_skills.length; i++ ) {
+    if( g_user_skills[i]==skill ) {
+      already_has_skill = true;
+    }
+  }
+  if( ! already_has_skill ) {
+    var skill_tbl_bdy = $("skill_tbl_bdy");
+    var row_num = skill_tbl_bdy.childNodes.length;
+    var row = document.createElement("TR");
+    var skill_td = '<td>'+skill+'</td>';
+    var btn_td  = '<td><input type="button" onclick="return del_skill_row('+row_num+')" value="Remove"></td>'; 
+    row.innerHTML = skill_td + btn_td;
+    skill_tbl_bdy.appendChild(row);
+    g_user_skills.push(skill);
+    $("new_skill_txt").value = "";
+  }
+  else {
+    alert("You already have that skill."); //FIXME
+  }
+}
+
+function del_skill_row(row_num) {
+  var skill_tbl_bdy = $("skill_tbl_bdy");
+  var row = skill_tbl_bdy.childNodes[row_num];
+  skill_tbl_bdy.removeChild(row);
+  var new_skills = [];
+  for( var i=0; i<g_user_skills.length; i++ ) {
+    if( g_user_skills[i] != skill_tbl_bdy.childNodes[i+1].firstChild.innerHTML ) {
+      new_skills.push(g_user_skills[i]);
+    }
+  }
+  g_user_skills = new_skills;
+}
+
+function add_skill_btn_onclick(evt) {
+  var skill = $("new_skill_txt").value;
+  add_skill(skill);
+  return false;
+}
+
+function load_skills() {
+  var skills_from_db = req_skills_from_db();
+}
+
+function save_skills_to_db() {
+  Ext.Ajax.request({
+    url: '/fb/fbUser',
+    success: function(result,request) {
+      var ob = Ext.util.JSON.decode(result.responseText);
+      var skills = ob.skills;
+      var i;
+      for(i=0; i<skills.length; i++) {
+        var skill = skills[i];
+        add_skill(skill);
+      }
+    },
+    method: "POST",
+    failure: function(result,request) {
+      //alert("Couldn't fetch skills from database.");  
+    },
+    params: { fb_id: g_fb_id,
+          skills: Ext.util.JSON.encode(g_user_skills) }
+  });
+}
+
+function req_skills_from_db() {
+  Ext.Ajax.request({
+    url: '/fb/fbUser',
+    success: function(result,request) {
+      var ob = Ext.util.JSON.decode(result.responseText);
+      var skills = ob.skills;
+      var i;
+      for(i=0; i<skills.length; i++) {
+        var skill = skills[i];
+        add_skill(skill);
+      }
+    },
+    method: "GET",
+    failure: function(result,request) {
+      //alert("Couldn't fetch skills from database.");  
+    },
+    params: { fb_id: g_fb_id }
+  });
+}
+
+
+
+//--------------------------------------------------------------------
+function add_interest(interest) {
+  var i;
+  var already_has_interest = false;
+  for( i=0; i<g_user_interests.length; i++ ) {
+    if( g_user_interests[i]==interest ) {
+      already_has_interest = true;
+    }
+  }
+  if( ! already_has_interest ) {
+    var interest_tbl_bdy = $("interest_tbl_bdy");
+    var row_num = interest_tbl_bdy.childNodes.length;
+    var row = document.createElement("TR");
+    var interest_td = '<td>'+interest+'</td>';
+    var btn_td  = '<td><input type="button" onclick="return del_interest_row('+row_num+')" value="Remove"></td>'; 
+    row.innerHTML = interest_td + btn_td;
+    interest_tbl_bdy.appendChild(row);
+    g_user_interests.push(interest);
+    $("new_interest_txt").value = "";
+  }
+  else {
+    alert("You already have that interest."); //FIXME
+  }
+}
+
+function del_interest_row(row_num) {
+  var interest_tbl_bdy = $("interest_tbl_bdy");
+  var row = interest_tbl_bdy.childNodes[row_num];
+  interest_tbl_bdy.removeChild(row);
+  var new_interests = [];
+  for( var i=0; i<g_user_interests.length; i++ ) {
+    if( g_user_interests[i] != interest_tbl_bdy.childNodes[i+1].firstChild.innerHTML ) {
+      new_interests.push(g_user_interests[i]);
+    }
+  }
+  g_user_interests = new_interests;
+}
+
+function add_interest_btn_onclick(evt) {
+  var interest = $("new_interest_txt").value;
+  add_interest(interest);
+  return false;
+}
+
+function load_interests() {
+  var interests_from_db = req_interests_from_db();
+}
+
+function save_interests_to_db() {
+  Ext.Ajax.request({
+    url: '/fb/fbUser',
+    success: function(result,request) {
+      var ob = Ext.util.JSON.decode(result.responseText);
+      var interests = ob.interests;
+      var i;
+      for(i=0; i<interests.length; i++) {
+        var interest = interests[i];
+        add_interest(interest);
+      }
+    },
+    method: "POST",
+    failure: function(result,request) {
+      //alert("Couldn't fetch interests from database.");  
+    },
+    params: { fb_id: g_fb_id,
+          interests: Ext.util.JSON.encode(g_user_interests) }
+  });
+}
+
+function req_interests_from_db() {
+  Ext.Ajax.request({
+    url: '/fb/fbUser',
+    success: function(result,request) {
+      var ob = Ext.util.JSON.decode(result.responseText);
+      var interests = ob.interests;
+      var i;
+      for(i=0; i<interests.length; i++) {
+        var interest = interests[i];
+        add_interest(interest);
+      }
+    },
+    method: "GET",
+    failure: function(result,request) {
+      //alert("Couldn't fetch interests from database.");  
+    },
+    params: { fb_id: g_fb_id }
+  });
+}
+
+
+//--------------------------------------------------------------------
+
+
+function body_onload() {
+  g_fb_id = getSpecificURLParameter("fb_id");
+  req_skills_from_db();
+  req_interests_from_db();
+}
+
+</script>
+
+
+	<!--
+    <script type="text/javascript" src="combos.js"></script>
+    <link rel="stylesheet" type="text/css" href="combos.css" />
+	-->
+
+    <!-- Common Styles for the examples -->
+	<!--
+    <link rel="stylesheet" type="text/css" href="../shared/examples.css" />
+    <style type="text/css">
+        p { width:650px; }
+    </style>
+	-->
+</head>
+<body onload="return body_onload();">
+<h1>Profile</h1>
+<h2>Skills</h2>
+<p>Tell us about the skills you can use to help.</p>
+<form method="post" action="" id="f">
+<table id="skill_tbl" border="1">
+  <thead>
+    <tr>
+      <th>Skill</th>
+    </tr>
+  </thead>
+	<tbody id="skill_tbl_bdy">
+    <tr>
+      <td>
+        <input type="text" name="new_skill_txt" id="new_skill_txt" value="">
+      </td>
+      <td>
+        <input type="button" name="add_skill_btn" value="Add" onclick="return add_skill_btn_onclick();">
+      </td>
+    </tr>
+	</tbody>
+</table>
+
+<h2>Interests</h2>
+<p>Tell us what you are interested in so we can match you with tasks you'll enjoy.</p>
+<table id="interest_tbl" border="1">
+  <thead>
+    <tr>
+      <th>Interests</th>
+    </tr>
+  </thead>
+	<tbody id="interest_tbl_bdy">
+    <tr>
+      <td>
+        <input type="text" name="new_interest_txt" id="new_interest_txt" value="">
+      </td>
+      <td>
+        <input type="button" name="add_interest_btn" value="Add" onclick="return add_interest_btn_onclick();">
+      </td>
+    </tr>
+	</tbody>
+</table>
+</form>
+</body>
+</html>
+
