@@ -1,29 +1,29 @@
 application: crisiscorpsapp
-version: 1
+version: 2
 runtime: python
 api_version: 1
 
 handlers:
-- url: /libs
+- url: /libs/
   static_dir: libs
 
-- url: /css
+- url: /css/
   static_dir: css
 
-- url: /images
+- url: /images/
   static_dir: images
 
 # --------------------
 # Common functionality
 # --------------------
-- url: /common/static
+- url: /common/static/
   static_dir: common/static
 
 # ----------------------
 # Facebook specific code
 # ----------------------
-- url: /fb/static
-  static_dir: fb/static
+- url: /fb/static/
+  static_dir: fb/static/
 
 - url: /fb/.*
   script: fb/scripts/interface.py
